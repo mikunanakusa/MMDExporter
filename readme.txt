@@ -1,0 +1,35 @@
+Google SketchUpからMMDのアクセサリを出力するプラグインです。
+
+http://www.scriptspot.com/sketchup/script/zbylsxexporter
+を元に改造しています。
+
+使い方は落としたファイルを解答して.rbファイルをSketchUPのpluginsフォルダに放り込めばメニューから使えるようになります。
+
+改造したところは以下になります。
+
+* テクスチャ、ポリゴンの裏表がおかしくなっている部分の修正
+* .Xファイルの分割出力
+* 透過設定をしている or していないポリゴンの出力
+* jpg、png拡張子をtga拡張子に変更して出力（ファイルの形式は変更していないのでIrfanViewなどで変換してください）
+* 出力アクセサリのサイズ変更機能
+
+メニューのPluginsのMMD Exporterから起動できます。
+
+Export .X File: ファイルを出力します。
+
+Output directory: ファイルの出力ディレクトリを設定します。おそらく日本語ディレクトリは使えないと思います。
+
+Output file: 出力ファイル名を入れます。分割時は_1、_2をファイル名に追加して出力します。
+
+Split: 分割数を入れます。デフォルトは1です。
+
+Export Size: 出力サイズを入れます。3を入れるとモデルのサイズが3倍になります。取ってきたファイルの大きさがあわないときはここで調整します。
+
+Export ALL: すべてのポリゴンを出力します
+Export Use Alpha Only: 透過設定をしているポリゴンのみ出力します
+Export Not Use Alpha: 透過設定をしていないポリゴンを出力します
+
+Export selected only: 選択した部分のみ出力します
+
+Rename Texture filename: テクスチャファイルのjpg、pngの拡張子をtga拡張子に変更して出力します。.xファイルの拡張子を変更するだけですので、出力したテクスチャファイルはIrfanViewなどで変換してください。IrfanViewの一括変換は便利です。
+
