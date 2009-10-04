@@ -1,37 +1,51 @@
-== GoogleSketchUP MMD accessory exporter(.x)
+== MMD accessory(DirectX .X) File Exporter for Google SketchUp
 Google SketchUpからMMDのアクセサリを出力するプラグインです。
 
 == 概要
 http://www.scriptspot.com/sketchup/script/zbylsxexporter
 を元に改造しています。
+
 2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 partミク」スレ 793を元に
+
 2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 part40」スレ 409氏が配布している
+
 テクスチャファイルをTGAへ自動変換する機能を追加する改造版を元に修正を行いました。
 
 == インストール
+http://github.com/mikunanakusa/MMDExporter のページからdownload -> ZIP をクリックして、ファイルをダウンロードします。
+
 使い方は落としたファイルを解凍して.rbファイルをSketchUPのpluginsフォルダに放り込めばメニューから使えるようになります。
+
 ImageMagickのインストールは http://bytatsu.net/uploader/mikumikudance/src/up0320.zip を参考にしてインストールしてください。
+テクスチャファイルの透過設定を判定するために、ImageMagick の identify.exe コマンドも使用していますので、同様に設定をしてください。
 
 == 使い方
 メニューのPluginsのMMD Exporterから起動できます。
-* Export .X File: ファイルを出力します。
-* Output directory: ファイルの出力ディレクトリを設定します。
-* Output file: 出力ファイル名を入れます。分割時は_1、_2をファイル名に追加して出力します。
-* Export Size: 出力サイズを入れます。3を入れるとモデルのサイズが3倍になります。
-取ってきたファイルの大きさがあわないときはここで調整します。
-* Export selected only: 選択した部分のみ出力します
-* Rename Texture filename: テクスチャファイルのjpg、pngの拡張子を拡張子に変更して出力します。
-* Auto Split: 自動分割を行います
+* Export .X File:
+ ファイルを出力します。
+* Output directory:
+ ファイルの出力ディレクトリを設定します。
+* Output file:
+ 出力ファイル名を入れます。分割時は_1、_2をファイル名に追加して出力します。
+* Export Size: 
+ 出力サイズを入れます。3を入れるとモデルのサイズが3倍になります。
+ 取ってきたファイルの大きさがあわないときはここで調整します。
+* Export selected only:
+ 選択した部分のみ出力します
+* Rename Texture filename: 
+ テクスチャファイルのjpg、pngの拡張子を拡張子に変更して出力します。
+* Auto Split:
+ 自動分割を行います
 
 == 開発履歴
 * 0.2 2009-10-04
- ImageMagick のconvertコマンドがtgaファイルの生成に失敗しているのでデフォルトのテクスチャファイルをbmpに変更
+ ImageMagick のconvertコマンドがtgaファイルの生成に失敗しているのでデフォルトのテクスチャファイルのフォーマットをbmpに変更。透過設定をしているもののみtgaで出力
  透過設定しているテクスチャがの修正
  アクセサリ分割を分割数の手動設定から自動分割に変更
  テクスチャのUVマッピングの修正
 
 * 2009-10-01
-* 2009/09/25
+* 2009-09-25
  2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 part40」スレ 409氏による機能追加
  http://bytatsu.net/uploader/mikumikudance/src/up0320.zip
 
