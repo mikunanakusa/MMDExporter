@@ -15,7 +15,7 @@ http://github.com/mikunanakusa/MMDExporter のページからdownload -> ZIP を
 使い方は落としたファイルを解凍して.rbファイルをSketchUPのpluginsフォルダに放り込めばメニューから使えるようになります。
 
 ImageMagickのインストールは http://bytatsu.net/uploader/mikumikudance/src/up0320.zip を参考にしてインストールしてください。
-テクスチャファイルの透過設定を判定するために、ImageMagick の identify.exe コマンドも使用していますので、同様に設定をしてください。
+テクスチャファイルの透過設定を判定するために、ImageMagick の identify.exe コマンドも使用していますので、同様にMMDExporter_config.rbの設定をしてください。
 
 == 使い方
 メニューのPluginsのMMD Exporterから起動できます。
