@@ -12,6 +12,8 @@ http://www.scriptspot.com/sketchup/script/zbylsxexporter
 == インストール
 http://github.com/mikunanakusa/MMDExporter のページからdownload -> ZIP をクリックして、ファイルをダウンロードします。
 
+もし、うまくいかなかった場合は http://github.com/mikunanakusa/MMDExporter/zipball/master から落としてください。
+
 使い方は落としたファイルを解凍して.rbファイルをSketchUPのpluginsフォルダに放り込めばメニューから使えるようになります。
 
 ImageMagickのインストールは http://bytatsu.net/uploader/mikumikudance/src/up0320.zip を参考にしてインストールしてください。
