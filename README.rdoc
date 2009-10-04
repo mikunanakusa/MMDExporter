@@ -7,9 +7,7 @@ http://www.scriptspot.com/sketchup/script/zbylsxexporter
 
 2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 partミク」スレ 793を元に
 
-2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 part40」スレ 409氏が配布している
-
-テクスチャファイルをTGAへ自動変換する機能を追加する改造版を元に修正を行いました。
+2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 part40」スレ 409氏が配布しているテクスチャファイルをTGAへ自動変換する機能を追加する改造版を元に修正を行いました。
 
 == インストール
 http://github.com/mikunanakusa/MMDExporter のページからdownload -> ZIP をクリックして、ファイルをダウンロードします。
@@ -38,7 +36,7 @@ ImageMagickのインストールは http://bytatsu.net/uploader/mikumikudance/sr
  自動分割を行います
 
 == 開発履歴
-* 0.2 2009-10-04
+* 2009-10-04
  ImageMagick のconvertコマンドがtgaファイルの生成に失敗しているのでデフォルトのテクスチャファイルのフォーマットをbmpに変更。透過設定をしているもののみtgaで出力
  透過設定しているテクスチャがの修正
  アクセサリ分割を分割数の手動設定から自動分割に変更
@@ -49,7 +47,7 @@ ImageMagickのインストールは http://bytatsu.net/uploader/mikumikudance/sr
  2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 part40」スレ 409氏による機能追加
  http://bytatsu.net/uploader/mikumikudance/src/up0320.zip
 
-* 0.01 2009-09-23
+* 2009-09-23
  テクスチャ、ポリゴンの裏表がおかしくなっている部分の修正
  .Xファイルの分割出力
  透過設定をしている or していないポリゴンの出力
