@@ -1,9 +1,21 @@
-Google SketchUpからMMDのアクセサリを出力するプラグインです。
+#
+#= GoogleSketchUP MMD accessory exporter(.x)
+#= Google SketchUpからMMDのアクセサリを出力するプラグインです。
+#
 
+=
 http://www.scriptspot.com/sketchup/script/zbylsxexporter
 を元に改造しています。
 
 使い方は落としたファイルを解答して.rbファイルをSketchUPのpluginsフォルダに放り込めばメニューから使えるようになります。
+
+2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 partミク」スレ 793を元に
+2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 part40」スレ 409氏が配布している
+テクスチャファイルをTGAへ自動変換する機能を追加する改造版を元に以下の修正を加えました。
+
+
+
+
 
 改造したところは以下になります。
 
@@ -23,7 +35,8 @@ Output file: 出力ファイル名を入れます。分割時は_1、_2をファ
 
 Split: 分割数を入れます。デフォルトは1です。
 
-Export Size: 出力サイズを入れます。3を入れるとモデルのサイズが3倍になります。取ってきたファイルの大きさがあわないときはここで調整します。
+Export Size: 出力サイズを入れます。3を入れるとモデルのサイズが3倍になります。
+取ってきたファイルの大きさがあわないときはここで調整します。
 
 Export ALL: すべてのポリゴンを出力します
 Export Use Alpha Only: 透過設定をしているポリゴンのみ出力します
@@ -31,5 +44,6 @@ Export Not Use Alpha: 透過設定をしていないポリゴンを出力しま�
 
 Export selected only: 選択した部分のみ出力します
 
-Rename Texture filename: テクスチャファイルのjpg、pngの拡張子をtga拡張子に変更して出力します。.xファイルの拡張子を変更するだけですので、出力したテクスチャファイルはIrfanViewなどで変換してください。IrfanViewの一括変換は便利です。
-
+Rename Texture filename: テクスチャファイルのjpg、pngの拡張子をtga拡張子に変更して出力します。
+.xファイルの拡張子を変更するだけですので、出力したテクスチャファイルはIrfanViewなどで変換してください。
+IrfanViewの一括変換は便利です。
