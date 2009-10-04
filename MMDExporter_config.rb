@@ -1,5 +1,5 @@
 module MMDExporter
-	@@max_proc = 1
+	@@max_proc = 2
 	
 	@@rename_tga = true
 
