@@ -23,7 +23,6 @@ module MMDExporter
 	
 	module_function
 
-	Export_point_size = 65535
 	Meter_to_inch = 39.3700787
 	Inch_to_meter = 1.0 / Meter_to_inch
 	Specular = 0.1
@@ -703,7 +702,7 @@ module MMDExporter
 					hash[:REN_DST] = "#{File.basename(hash[:REN_SRC], '.*')}.bmp"
 					convert_filelist.concat [hash]
 				}
-				
+
 				convert_filelist.each{|convert_file|
 					Thread.new(convert_file){|convert_file|
 						if im_identify && `"#{im_identify}" -verbose "#{convert_file[:SRC]}"`["Alpha:"]
@@ -714,7 +713,12 @@ module MMDExporter
 						print_callback.call(true, "convert start #{convert_file[:SRC]} to #{convert_file[:DST]}")
 						File.cp(convert_file[:SRC], convert_file[:REN_SRC])						
 						`"#{im_convert}" "#{convert_file[:REN_SRC]}" "#{convert_file[:REN_DST]}"`
-						File.delete(convert_file[:REN_SRC])
+						begin
+							File.delete(convert_file[:REN_SRC])
+						rescue
+							sleep(0.1)
+							retry
+						end				
 						if File.exist?(convert_file[:REN_DST])
 							print_callback.call(true, "convert success #{convert_file[:SRC]} to #{convert_file[:DST]}")
 							File.rename(convert_file[:REN_DST], convert_file[:DST])
