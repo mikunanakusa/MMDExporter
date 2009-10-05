@@ -16,7 +16,7 @@ http://github.com/mikunanakusa/MMDExporter のページからdownload -> ZIP を
 もし、うまくいかなかった場合は http://github.com/mikunanakusa/MMDExporter/zipball/master から落としてください。
 
 === Google SketchUp のセットアップ
-Google SketchUp ですが、http://sketchup.google.com/intl/ja/ のページからインストールを行います。
+Google SketchUp ですが、http://sketchup.google.com/ のページからインストールを行います。
 このプラグインは Google SketchUp 6 (無料版)  で使用可能です。
 
 === ImageMagick のセットアップ
