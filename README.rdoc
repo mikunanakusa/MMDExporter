@@ -37,7 +37,7 @@ ImageMagickのインストールはim_setup.htmlを参考にしてインスト�
 * im_setup.html          ImageMagickのセットアップ簡易手順書
 * config_edit.html       設定ファイルの編集簡易手順書
 
-img<dir> 改造版について.txt インストール手順.html im_setup.html config_edit.html は http://bytatsu.net/uploader/mikumikudance/src/up0320.zip に同封されているものです。
+img<dir> About_modified_version.txt install.html im_setup.html config_edit.html は http://bytatsu.net/uploader/mikumikudance/src/up0320.zip に同封されているものです。
 
 == 使い方
 メニューのPluginsのMMD Exporterから起動できます。
