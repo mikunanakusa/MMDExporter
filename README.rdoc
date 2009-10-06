@@ -28,14 +28,14 @@ ImageMagickのインストールはim_setup.htmlを参考にしてインスト�
 詳細は インストール手順.html を参考にしてください。
 
 == ファイル
--　img <dir>              手順書で使用している画像ファイルが入っているフォルダ
--　MMDExporter.rb         exporter本体 / Rubyスクリプト
--　MMDExporter_config.rb  exporterの設定ファイル / Rubyスクリプト
--　README.rdoc            このファイル
--　改造版について.txt     改造版に関するreadme
--　インストール手順.html  インストール簡易手順書
--　im_setup.html          ImageMagickのセットアップ簡易手順書
--　config_edit.html       設定ファイルの編集簡易手順書
+-img <dir>              手順書で使用している画像ファイルが入っているフォルダ
+-MMDExporter.rb         exporter本体 / Rubyスクリプト
+-MMDExporter_config.rb  exporterの設定ファイル / Rubyスクリプト
+-README.rdoc            このファイル
+-改造版について.txt     改造版に関するreadme
+-インストール手順.html  インストール簡易手順書
+-im_setup.html          ImageMagickのセットアップ簡易手順書
+-config_edit.html       設定ファイルの編集簡易手順書
 
 img<dir> 改造版について.txt インストール手順.html im_setup.html config_edit.html は http://bytatsu.net/uploader/mikumikudance/src/up0320.zip に同封されているものです。
 
