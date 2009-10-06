@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja-JP">
+	<head>
+		<title>設定ファイル編集手順書</title>
+		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	</head>
+	<body>
+		<h1>設定ファイル編集手順書</h1><br>
+		<p>
+		はじめに<br>
+		この手順はツールの初期設定値を設定する設定ファイルを編集する手順が書かれています。<br>
+		設定可能な初期設定値は<br>
+		・画像の変換のために実行しているImageMagic/convert.exeコマンドの最大起動数<br>
+		・TGAリネームを行う/行わないのデフォルト設定<br>
+		・ImageMagic/convert.exeコマンドのパス指定<br>
+		の3項目です。<br>
+		<p>
+		１．Google SketchUpの"Plugins"フォルダにある"MMDExporter_config.rb"ファイルをメモ帳で開きます。(メモ帳へドラッグ＆ドロップで開くことが出来ます。メモ帳でなく任意のテキストエディタで編集を行ってもかまいません。)<br>
+		<p>
+		２．以下の画像で赤に囲まれているところを編集します。<br>
+		<img src="./img/090.png" alt=""><br>
+		<table border="1">
+			<tr>
+				<td width="100">
+					一番上
+				</td>
+				<td>
+					画像をTGAに変換するときにImageMagickのconvert.exeコマンドを実行しますが、このツールではconvert.exeコマンドを複数個同時に起動することが可能です。最大何個まで起動を許すのかを半角の数字で記述します。最小値は1、最大値は16まで有効です。この範囲を逸脱した場合は1になります。
+				</td>
+			</tr>
+			<tr>
+				<td>
+					真ん中
+				</td>
+				<td>
+					ツールを起動したときのウインドウにある"Rename Texture filename"チェックボックスの初期値を設定します。半角の小文字で"true"と記述すると"Rename Texture filename"チェックボックスにチェックが入った状態でウインドウが開きます。半角の小文字で"false"と記述するとチェックボックスにチェックが入っていない状態でウインドウが開きます。trueおよびfalseのみ有効です。これら以外を設定した場合はfalseになります。
+				</td>
+			</tr>
+			<tr>
+				<td>
+					一番下
+				</td>
+				<td>
+					ImageMagickのconvert.exeファイルのパスを任意に設定したい場合に使用します。convert.exeファイルへのパスをシングルクオーテーション→'で囲って半角で記述してください。相対パス、絶対パスともに使用可能です。記述されていない場合、パスが有効でない場合はGoogle SketchUpの"Plugins"フォルダおよびシステムのパスからconvert.exeを探します。見つからなかった場合は画像の変換は行いません。
+				</td>
+			</tr>
+		</table>
+		<p>
+		３．編集が終わったらファイル→保存でファイルを保存します。<br>
+		<p>
+		４．メモ帳を閉じて設定ファイルの編集は終了です。<br>
+		<p>
+	</body>
+</html>
