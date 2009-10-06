@@ -1,74 +1,74 @@
 ||==========================================================================||
 ||                                                                          ||
-||  GoogleSketchUP MMD accessory exporter(.x) ������                        ||
+||  GoogleSketchUP MMD accessory exporter(.x) 改造版                        ||
 ||                                                                          ||
 ||==========================================================================||
 
-���T�v
-�@2ch/Youtube�u�yMMD�zMikuMikuDance���搧��/�ӏ܃X���y�����~�N�z part�~�N�v�X��
-�@��>>793�����z�z���Ă���GoogleSketchUP��exporter[up0294.zip]�Ƀe�N�X�`���t�@�C����
-�@TGA�֎����I�ɕϊ�����@�\��ǉ��������̂ł��B
-�@�܂��摜�̕ϊ��̂��߂�ImageMagick��convert.exe�R�}���h���g�p���܂��B
-�@convert.exe�͈ȉ��̏ꏊ�Ɏ��s�\�ȏ�ԂŒu���Ă��������B
-�@�@�P�DMMDExporter_config.rb��@@ImageMagick_convert�ϐ��Ŏw�肵���t�@�C��
-�@�@�Q�DGoogle SketchUp��"Plugins"�t�H���_
-�@�@�R�D�V�X�e���̃p�X���ʂ��Ă���ꏊ
-�@�@���ォ�珇��ImageMagick��convert.exe��T�����܂��B������Ȃ������ꍇ�͉摜��
-�@�@�@�ϊ����s���܂���B
+＄概要
+　2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 partミク」スレ
+　の>>793氏が配布しているGoogleSketchUPのexporter[up0294.zip]にテクスチャファイルを
+　TGAへ自動的に変換する機能を追加したものです。
+　また画像の変換のためにImageMagickのconvert.exeコマンドを使用します。
+　convert.exeは以下の場所に実行可能な状態で置いてください。
+　　１．MMDExporter_config.rbの@@ImageMagick_convert変数で指定したファイル
+　　２．Google SketchUpの"Plugins"フォルダ
+　　３．システムのパスが通っている場所
+　　※上から順にImageMagickのconvert.exeを探索します。見つからなかった場合は画像の
+　　　変換を行いません。
 
-���t�@�C���E�t�H���_
-�@img <dir>              �菇���Ŏg�p���Ă���摜�t�@�C���������Ă���t�H���_
-�@MMDExporter.rb         exporter�{�� / Ruby�X�N���v�g
-�@MMDExporter_config.rb  exporter�̐ݒ�t�@�C�� / Ruby�X�N���v�g
-�@readme.txt             �I���W�i����readme
-�@�����łɂ���.txt     �����łɊւ���readme(���̃t�@�C��)
-�@�C���X�g�[���菇.html  �C���X�g�[���ȈՎ菇��
-�@im_setup.html          ImageMagick�̃Z�b�g�A�b�v�ȈՎ菇��
-�@config_edit.html       �ݒ�t�@�C���̕ҏW�ȈՎ菇��
+＄ファイル・フォルダ
+　img <dir>              手順書で使用している画像ファイルが入っているフォルダ
+　MMDExporter.rb         exporter本体 / Rubyスクリプト
+　MMDExporter_config.rb  exporterの設定ファイル / Rubyスクリプト
+　readme.txt             オリジナルのreadme
+　改造版について.txt     改造版に関するreadme(このファイル)
+　インストール手順.html  インストール簡易手順書
+　im_setup.html          ImageMagickのセットアップ簡易手順書
+　config_edit.html       設定ファイルの編集簡易手順書
 
-���C���X�g�[��
-�@�ڂ����̓C���X�g�[���菇.html���Q�Ƃ��Ă��������B
-�@��܂��ɁAImageMagick�Z�b�g�A�b�v�Aexporter�̃C���X�g�[���A�K�v�Ȃ�
-�@�ݒ�t�@�C���̕ҏW�̗���ɂȂ�܂��BImageMagick�͂��łɂ��g���̊��������
-�@������𗘗p���Ă��������Ă����܂��܂���B
+＄インストール
+　詳しくはインストール手順.htmlを参照してください。
+　大まかに、ImageMagickセットアップ、exporterのインストール、必要なら
+　設定ファイルの編集の流れになります。ImageMagickはすでにお使いの環境があれば
+　そちらを利用していただいてもかまいません。
 
-������Ƃ�
-�@Rename Texture filenam�Ƀ`�F�b�N�����ăG�N�X�|�[�g�����
-�@�@�P�Dconvert.exe��T��
-�@�@�Q�D�e�N�X�`���t�@�C�����̈ꗗ���擾����
-�@�@�R�D�e�N�X�`���t�@�C����tga�ɕϊ�����
-�@�@�S�D���̃e�N�X�`���t�@�C�����폜����
-�@�ȏ�̓����ǉ��ōs���܂��B
-�@�P�y�тR��convert.exe�����s���邽�߃R�}���h�v�����v�g���������J���܂�
-�@�P�ł͍ő�3���A�R�ł̓e�N�X�`���̖������J���܂��B�����I�ɕ��܂��̂�
-�@���̂܂܂ł��҂����������B
-�@�R�͐ݒ�t�@�C���Őݒ肳�ꂽ����convert.exe�𓯎��ɋN�������邱�Ƃ��\�ł��B
-�@�}���`�R�A�Ȋ��ł͓����N��������ƕϊ������������Ȃ邩������܂���B
-�@���̓}���`�R�A�̊��������Ă��Ȃ��̂Ō��ʂ̗L���͊m�F�o���Ă��܂���E�E�E
+＄動作とか
+　Rename Texture filenamにチェックを入れてエクスポートすると
+　　１．convert.exeを探す
+　　２．テクスチャファイル名の一覧を取得する
+　　３．テクスチャファイルをtgaに変換する
+　　４．元のテクスチャファイルを削除する
+　以上の動作を追加で行います。
+　１及び３でconvert.exeを実行するためコマンドプロンプトが何枚か開きます
+　１では最大3枚、３ではテクスチャの枚数分開きます。自動的に閉じますので
+　そのままでお待ちください。
+　３は設定ファイルで設定された数のconvert.exeを同時に起動させることが可能です。
+　マルチコアな環境では同時起動させると変換処理が速くなるかもしれません。
+　私はマルチコアの環境を持っていないので効果の有無は確認出来ていません・・・
 
-���Ɛ�
-�@�����g��GoogleSketchUP�ɂ��ďڂ�������܂���̂őz�肵�Ȃ����������\����
-�@����܂��B�����N���Ă��ӔC�����Ă܂���̂ł����m���������B
+＄免責
+　私自身がGoogleSketchUPについて詳しくありませんので想定しない動作をする可能性が
+　あります。何が起きても責任を持てませんのでご承知ください。
 
-�����̑�
-�@�EImageMagick
-�@�@�@http://www.imagemagick.org/
-�@�@����ImageMagick���g�p����\�肪�Ȃ��ꍇ��Portable Win32���_�E�����[�h��A�𓀂�
-�@�@convert.exe��MMDExporter.rb�Ɠ����t�H���_�ɃR�s�[���Ă��܂��̂��������肷��
-�@�@�����m��܂���B
-�@�EMMDExporter_config.rb
-�@�@�ݒ�t�@�C���ƌ������ƂɂȂ��Ă��܂������Ԃ�Ruby�X�N���v�g���̂��̂ł��B
-�@�@GoogleSketchUP�N�����Ɏ��s����܂��̂ŁARuby�̕��@�I�ɐ������Ȃ�������������
-�@�@����ƃG���[����������\��������܂��̂Œ��ӂ��Ă��������B
-�@�@"�ݒ�t�@�C���̕ҏW�ȈՎ菇��"�ɏ����Ă���͈͂ŕҏW���镪�ɂ͖��Ȃ���
-�@�@�v���܂��B(Ruby��������͍D���Ȃ悤�ɏ����Ă�������)
+＄その他
+　・ImageMagick
+　　　http://www.imagemagick.org/
+　　他にImageMagickを使用する予定がない場合はPortable Win32をダウンロード後、解凍し
+　　convert.exeをMMDExporter.rbと同じフォルダにコピーしてしまうのがすっきりする
+　　かも知れません。
+　・MMDExporter_config.rb
+　　設定ファイルと言うことになっていますが実態はRubyスクリプトそのものです。
+　　GoogleSketchUP起動時に実行されますので、Rubyの文法的に正しくない文があったり
+　　するとエラーが発生する可能性がありますので注意してください。
+　　"設定ファイルの編集簡易手順書"に書いてある範囲で編集する分には問題ないと
+　　思います。(Rubyが判る方は好きなように書いてください)
 
-���X�V����
-0.1 [2009/10/01] �E�ϊ��Ɏ��s���ɂ��I���W�i���̃e�N�X�`���t�@�C�����폜���Ă����̂�
-                 �@�폜���Ȃ��悤�ɂ���
-                 �E���{��p�X�A���{��t�@�C�����ł��ϊ��ł���悤�ɂ���
-                 �E�ݒ�̕ύX�ӏ���ʃt�@�C���ɕ�������
-                 �EImageMagick��convert.exe�𕡐��N���\�ɂ���
-                 �ERename Texture filename�̃`�F�b�N�{�b�N�X�̃f�t�H���g�l��
-                 �@�ݒ�\�ɂ���
-����[2009/09/25] �E�Ƃ肠���������悤�ɂȂ���������J�B�p�b�`�ɂ�郊���[�X
+＄更新履歴
+0.1 [2009/10/01] ・変換に失敗時にもオリジナルのテクスチャファイルを削除していたのを
+                 　削除しないようにした
+                 ・日本語パス、日本語ファイル名でも変換できるようにした
+                 ・設定の変更箇所を別ファイルに分離した
+                 ・ImageMagickのconvert.exeを複数個起動可能にした
+                 ・Rename Texture filenameのチェックボックスのデフォルト値を
+                 　設定可能にした
+初版[2009/09/25] ・とりあえず動くようになったから公開。パッチによるリリース
