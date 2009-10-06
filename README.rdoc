@@ -1,5 +1,5 @@
 == MMD accessory(DirectX .X) File Exporter for Google SketchUp
-Google SketchUpからMMDのアクセサリを出力するプラグインです。
+Google SketchUp(http://sketchup.google.com)からサイト「VPVP」(http://www.geocities.jp/higuchuu4/index.htm)で公開されているVOCALOID 3DPV製作用ツール「MikuMikuDance」（通称MMD）のアクセサリを出力するプラグインです。
 
 == 概要
 http://www.scriptspot.com/sketchup/script/zbylsxexporter
@@ -20,11 +20,24 @@ Google SketchUp ですが、http://sketchup.google.com のページからイン�
 このプラグインは Google SketchUp 6 (無料版)  で使用可能です。
 
 === ImageMagick のセットアップ
-ImageMagickのインストールは http://bytatsu.net/uploader/mikumikudance/src/up0320.zip を参考にしてインストールしてください。
+ImageMagickのインストールはim_setup.htmlを参考にしてインストールしてください。
 テクスチャファイルの透過設定を判定するために、ImageMagick の identify.exe コマンドも使用していますので、同様にMMDExporter_config.rbの設定をしてください。
 
 === プラグインのインストール
 使い方は落としたファイルを解凍して.rbファイルをSketchUPのpluginsフォルダに放り込めばメニューから使えるようになります。
+詳細は インストール手順.html を参考にしてください。
+
+== ファイル
+*　img <dir>              手順書で使用している画像ファイルが入っているフォルダ
+*　MMDExporter.rb         exporter本体 / Rubyスクリプト
+*　MMDExporter_config.rb  exporterの設定ファイル / Rubyスクリプト
+*　README.rdoc            このファイル
+*　改造版について.txt     改造版に関するreadme
+*　インストール手順.html  インストール簡易手順書
+*　im_setup.html          ImageMagickのセットアップ簡易手順書
+*　config_edit.html       設定ファイルの編集簡易手順書
+
+img<dir> 改造版について.txt インストール手順.html im_setup.html config_edit.html は http://bytatsu.net/uploader/mikumikudance/src/up0320.zip に同封されているものです。
 
 == 使い方
 メニューのPluginsのMMD Exporterから起動できます。
@@ -49,6 +62,9 @@ ImageMagickのインストールは http://bytatsu.net/uploader/mikumikudance/sr
 * 本プラグインを使用したことによる一切の損害（一次的、二次的に関わらず）に対し、作成者は責任を負いません。
 
 == 開発履歴
+* 2009-10-06
+ 2ch/Youtube板「【MMD】MikuMikuDance動画制作/鑑賞スレ【初音ミク】 part40」スレ 409氏のドキュメントを同封しました
+
 * 2009-10-04
  ImageMagick のconvertコマンドがtgaファイルの生成に失敗しているのでデフォルトのテクスチャファイルのフォーマットをbmpに変更。透過設定をしているもののみtgaで出力
  透過設定しているテクスチャがの修正

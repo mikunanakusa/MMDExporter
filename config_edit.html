@@ -1,54 +1,63 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="ja-JP">
 	<head>
-		<title>�ݒ�t�@�C���ҏW�菇��</title>
-		<META http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+		<title>設定ファイル編集手順書</title>
+		<META http-equiv="Content-Type" content="text/html; charset=UTF8">
 	</head>
 	<body>
-		<h1>�ݒ�t�@�C���ҏW�菇��</h1><br>
+		<h1>設定ファイル編集手順書</h1><br>
 		<p>
-		�͂��߂�<br>
-		���̎菇�̓c�[���̏����ݒ�l��ݒ肷��ݒ�t�@�C����ҏW����菇��������Ă��܂��B<br>
-		�ݒ�\�ȏ����ݒ�l��<br>
-		�E�摜�̕ϊ��̂��߂Ɏ��s���Ă���ImageMagic/convert.exe�R�}���h�̍ő�N����<br>
-		�ETGA���l�[�����s��/�s��Ȃ��̃f�t�H���g�ݒ�<br>
-		�EImageMagic/convert.exe�R�}���h�̃p�X�w��<br>
-		��3���ڂł��B<br>
+		はじめに<br>
+		この手順はツールの初期設定値を設定する設定ファイルを編集する手順が書かれています。<br>
+		設定可能な初期設定値は<br>
+		・画像の変換のために実行しているImageMagic/convert.exeコマンドの最大起動数<br>
+		・TGA、BMPリネームを行う/行わないのデフォルト設定<br>
+		・ImageMagic/convert.exeコマンドのパス指定<br>
+    ・ImageMagic/identify.exeコマンドのパス指定<br>
+		の4項目です。<br>
 		<p>
-		�P�DGoogle SketchUp��"Plugins"�t�H���_�ɂ���"MMDExporter_config.rb"�t�@�C�����������ŊJ���܂��B(�������փh���b�O���h���b�v�ŊJ�����Ƃ��o���܂��B�������łȂ��C�ӂ̃e�L�X�g�G�f�B�^�ŕҏW���s���Ă����܂��܂���B)<br>
+		１．Google SketchUpの"Plugins"フォルダにある"MMDExporter_config.rb"ファイルをメモ帳で開きます。(メモ帳へドラッグ＆ドロップで開くことが出来ます。メモ帳でなく任意のテキストエディタで編集を行ってもかまいません。)<br>
 		<p>
-		�Q�D�ȉ��̉摜�ŐԂɈ͂܂�Ă���Ƃ����ҏW���܂��B<br>
+		２．以下の画像で赤に囲まれているところが編集出来ます。<br>
 		<img src="./img/090.png" alt=""><br>
 		<table border="1">
 			<tr>
 				<td width="100">
-					��ԏ�
+					一番上
 				</td>
 				<td>
-					�摜��TGA�ɕϊ�����Ƃ���ImageMagick��convert.exe�R�}���h�����s���܂����A���̃c�[���ł�convert.exe�R�}���h�𕡐������ɋN�����邱�Ƃ��\�ł��B�ő剽�܂ŋN���������̂��𔼊p�̐����ŋL�q���܂��B�ŏ��l��1�A�ő�l��16�܂ŗL���ł��B���͈̔͂���E�����ꍇ��1�ɂȂ�܂��B
+					画像をTGAに変換するときにImageMagickのconvert.exe、identify.exeコマンドを実行しますが、このツールではconvert.exe、identify.exeコマンドを複数個同時に起動することが可能です。最大何個まで起動を許すのかを半角の数字で記述します。最小値は1、最大値は16まで有効です。この範囲を逸脱した場合は1になります。
 				</td>
 			</tr>
 			<tr>
 				<td>
-					�^��
+					二つ目
 				</td>
 				<td>
-					�c�[�����N�������Ƃ��̃E�C���h�E�ɂ���"Rename Texture filename"�`�F�b�N�{�b�N�X�̏����l��ݒ肵�܂��B���p�̏�������"true"�ƋL�q�����"Rename Texture filename"�`�F�b�N�{�b�N�X�Ƀ`�F�b�N����������ԂŃE�C���h�E���J���܂��B���p�̏�������"false"�ƋL�q����ƃ`�F�b�N�{�b�N�X�Ƀ`�F�b�N�������Ă��Ȃ���ԂŃE�C���h�E���J���܂��Btrue�����false�̂ݗL���ł��B�����ȊO��ݒ肵���ꍇ��false�ɂȂ�܂��B
+					ツールを起動したときのウインドウにある"Rename Texture filename"チェックボックスの初期値を設定します。半角の小文字で"true"と記述すると"Rename Texture filename"チェックボックスにチェックが入った状態でウインドウが開きます。半角の小文字で"false"と記述するとチェックボックスにチェックが入っていない状態でウインドウが開きます。trueおよびfalseのみ有効です。これら以外を設定した場合はfalseになります。
 				</td>
 			</tr>
 			<tr>
 				<td>
-					��ԉ�
+					三つ目
 				</td>
 				<td>
-					ImageMagick��convert.exe�t�@�C���̃p�X��C�ӂɐݒ肵�����ꍇ�Ɏg�p���܂��Bconvert.exe�t�@�C���ւ̃p�X���V���O���N�I�[�e�[�V������'�ň͂��Ĕ��p�ŋL�q���Ă��������B���΃p�X�A��΃p�X�Ƃ��Ɏg�p�\�ł��B�L�q����Ă��Ȃ��ꍇ�A�p�X���L���łȂ��ꍇ��Google SketchUp��"Plugins"�t�H���_����уV�X�e���̃p�X����convert.exe��T���܂��B������Ȃ������ꍇ�͉摜�̕ϊ��͍s���܂���B
+					ImageMagickのconvert.exe、indentify.exeファイルのパスを任意に設定したい場合に使用します。convert.exe、identify.exeファイルがインストールされているフォルダのパスをImageMagickDirにシングルクオーテーション→'で囲って半角で記述してください。相対パス、絶対パスともに使用可能です。記述されていない場合、パスが有効でない場合はGoogle SketchUpの"Plugins"フォルダおよびシステムのパスからconvert.exe、identify.exeを探します。見つからなかった場合は画像の変換は行いません。
 				</td>
 			</tr>
+      <tr>
+        <td>
+          一番下
+        </td>
+        <td>
+          自動分割時にひとつのアクセサリの最大頂点数を設定します。MMDでは65535以上に設定するとアクセサリが読み込めないです。
+        </td>
+      </tr>
 		</table>
 		<p>
-		�R�D�ҏW���I�������t�@�C�����ۑ��Ńt�@�C����ۑ����܂��B<br>
+		３．編集が終わったらファイル→保存でファイルを保存します。<br>
 		<p>
-		�S�D����������Đݒ�t�@�C���̕ҏW�͏I���ł��B<br>
+		４．メモ帳を閉じて設定ファイルの編集は終了です。<br>
 		<p>
 	</body>
 </html>
