@@ -45,18 +45,18 @@ img<dir> About_modified_version.txt install.html im_setup.html config_edit.html 
 == 使い方
 メニューのPluginsのMMD Exporterから起動できます。
 * Export .X File:
- ファイルを出力します。
+ アクセサリファイルを出力します。
 * Output directory:
- ファイルの出力ディレクトリを設定します。
+ アクセサリファイルの出力ディレクトリを設定します。
 * Output file:
- 出力ファイル名を入れます。分割時は_1、_2をファイル名に追加して出力します。
+ 出力アクセサリファイル名を入れます。分割時は_1、_2をファイル名に追加して出力します。
 * Export Size: 
- 出力サイズを入れます。3を入れるとモデルのサイズが3倍になります。
+ 出力アクセサリのサイズを入れます。3を入れるとモデルのサイズが3倍になります。
  取ってきたファイルの大きさがあわないときはここで調整します。
 * Export selected only:
  選択した部分のみ出力します
 * Rename Texture filename: 
- テクスチャファイルのjpg、pngの拡張子を拡張子に変更して出力します。
+ テクスチャファイルのjpg、pngの拡張子をtga、bmp拡張子に変更して出力します。ImageMagickを使って、フォーマット変換も行います。 
 * Auto Split:
  自動分割を行います
 
