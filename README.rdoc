@@ -20,12 +20,15 @@ Google SketchUp ですが、http://sketchup.google.com のページからイン�
 このプラグインは Google SketchUp 6 (無料版)  で使用可能です。
 
 === ImageMagick のセットアップ
-ImageMagickのインストールはim_setup.htmlを参考にしてインストールしてください。
-テクスチャファイルの透過設定を判定するために、ImageMagick の identify.exe コマンドも使用していますので、同様にMMDExporter_config.rbの設定をしてください。
+ImageMagickのインストールは 同封の im_setup.html か http://wiki.github.com/mikunanakusa/MMDExporter/imagemagick を参考にしてインストールしてください。
+
+MMDExporter_config.rbの設定は 同封の config_edit.html か http://wiki.github.com/mikunanakusa/MMDExporter/348071 を参考に設定をしてください。
+
+テクスチャファイルの透過設定を判定するために、ImageMagick の identify.exe コマンドも使用するように変更しています。
 
 === プラグインのインストール
-使い方は落としたファイルを解凍して.rbファイルをSketchUPのpluginsフォルダに放り込めばメニューから使えるようになります。
-詳細は インストール手順.html を参考にしてください。
+使い方は落としたファイルを解凍して.rbファイルをSketchUPのpluginsフォルダにコピーをすれば、SketchUpのメニューから使えるようになります。
+詳細は同封の インストール手順.html か http://wiki.github.com/mikunanakusa/MMDExporter/348036 を参考にしてください。
 
 == ファイル
 * img <dir>              手順書で使用している画像ファイルが入っているフォルダ
