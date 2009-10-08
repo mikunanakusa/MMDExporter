@@ -61,11 +61,11 @@ module MMDExporter
 		power = format("%8.4f", 5)
 		tex = ""
 		if textureFile && $smartInfo["renameTextureFile"]
-			textureFile_bmp = textureFile.gsub(/\.(jpg|png)/ , '.bmp')
+			textureFile_bmp = "#{File.basename(textureFile, '.*')}.bmp"
 			if File.exist?(textureFile_bmp)
 				textureFile = textureFile_bmp
 			else
-			textureFile = textureFile.gsub(/\.(jpg|png)/ , '.tga')				
+				textureFile = "#{File.basename(textureFile, '.*')}.tga"
 			end
 		end
 		tex = "   TextureFilename { \"#{textureFile}\"; }\n" if textureFile
