@@ -1,48 +1,68 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="ja-JP">
 	<head>
-		<title>設定ファイル編集手順書</title>
-		<META http-equiv="Content-Type" content="text/html; charset=UTF8">
+		<title>設定ファイル編集手順書 0.1</title>
+		<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
 	<body>
-		<h1>設定ファイル編集手順書</h1><br>
+		<h1>設定ファイル編集手順書 0.1</h1><br>
 		<p>
 		はじめに<br>
 		この手順はツールの初期設定値を設定する設定ファイルを編集する手順が書かれています。<br>
 		設定可能な初期設定値は<br>
-		・画像の変換のために実行しているImageMagic/convert.exeコマンドの最大起動数<br>
+		・画像の変換のために実行しているImageMagicコマンドの最大起動数<br>
 		・TGA、BMPリネームを行う/行わないのデフォルト設定<br>
-		・ImageMagic/convert.exeコマンドのパス指定<br>
-    ・ImageMagic/identify.exeコマンドのパス指定<br>
+		・ImageMagickをインストールしたフォルダの設定<br>
+    ・自動分割時のひとつのアクセサリあたりの最大頂点数<br>
 		の4項目です。<br>
 		<p>
+		<h2><b>最低限の設定</b></h2>
+		ImageMagickをインストールしたフォルダを設定します。<br>
+		<p>
+		１．Google SketchUpの"Plugins"フォルダとImageMagickをインストールしたフォルダを開きます。<br>
+		<p>
+		２．ImageMagickをインストールしたフォルダにある"convert.exe"を、Google SketchUpの"Plugins"フォルダにある"config_edit@im.js"にドラッグ＆ドロップします。("indentify.exe"をドラッグ＆ドロップしても処理されます)<br>
+		<img src="./img/120.png" alt=""><br>
+		<p>
+		３．以下のメッセージが出たら設定完了です。これ以外のメッセージが表示された場合は下記の順に従って手動で設定してください。<br>
+		<img src="./img/130.png" alt=""><br>
+		<p>
+		４．ImageMagickをインストールしたフォルダの設定は完了です。また、ImageMagickをインストールしたフォルダ以外の項目を設定する場合は下記の手順に従って手動で設定してください。<br>
+		<p>
+		<br>
+		手動で設定を変更する手順<br>
 		１．Google SketchUpの"Plugins"フォルダにある"MMDExporter_config.rb"ファイルをメモ帳で開きます。(メモ帳へドラッグ＆ドロップで開くことが出来ます。メモ帳でなく任意のテキストエディタで編集を行ってもかまいません。)<br>
 		<p>
 		２．以下の画像で赤に囲まれているところが編集出来ます。<br>
-		<img src="./img/090.png" alt=""><br>
+		<img src="./img/450.png" alt=""><br>
 		<table border="1">
 			<tr>
 				<td width="100">
 					一番上
 				</td>
 				<td>
-					画像をTGAに変換するときにImageMagickのconvert.exe、identify.exeコマンドを実行しますが、このツールではconvert.exe、identify.exeコマンドを複数個同時に起動することが可能です。最大何個まで起動を許すのかを半角の数字で記述します。最小値は1、最大値は16まで有効です。この範囲を逸脱した場合は1になります。
+					画像をTGAおよびBMPに変換するときにImageMagickのconvert.exe、identify.exeコマンドを実行しますが、このツールではconvert.exe、identify.exeコマンドを複数個同時に起動することが可能です。最大何個まで起動を許すのかを半角の数字(整数)で記述します。最小値は1、最大値は16まで有効です。この範囲を逸脱した場合は1になります。
 				</td>
 			</tr>
 			<tr>
 				<td>
-					二つ目
+					上から二つ目
 				</td>
 				<td>
-					ツールを起動したときのウインドウにある"Rename Texture filename"チェックボックスの初期値を設定します。半角の小文字で"true"と記述すると"Rename Texture filename"チェックボックスにチェックが入った状態でウインドウが開きます。半角の小文字で"false"と記述するとチェックボックスにチェックが入っていない状態でウインドウが開きます。trueおよびfalseのみ有効です。これら以外を設定した場合はfalseになります。
+					ツールを起動したときのウインドウにある"Rename Texture filename"チェックボックスの初期値を設定します。半角の小文字でtrueと記述すると"Rename Texture filename"チェックボックスにチェックが入った状態でウインドウが開きます。半角の小文字でfalseと記述するとチェックボックスにチェックが入っていない状態でウインドウが開きます。trueおよびfalseのみ有効です。これら以外を設定した場合はfalseになります。
 				</td>
 			</tr>
 			<tr>
 				<td>
-					三つ目
+					上から三つ目
 				</td>
 				<td>
-					ImageMagickのconvert.exe、indentify.exeファイルのパスを任意に設定したい場合に使用します。convert.exe、identify.exeファイルがインストールされているフォルダのパスをImageMagickDirにシングルクオーテーション→'で囲って半角で記述してください。相対パス、絶対パスともに使用可能です。記述されていない場合、パスが有効でない場合はGoogle SketchUpの"Plugins"フォルダおよびシステムのパスからconvert.exe、identify.exeを探します。見つからなかった場合は画像の変換は行いません。
+					ImageMagickのconvert.exeおよびindentify.exeコマンドがおいてあるフォルダを指定します。convert.exeおよびidentify.exeファイルがインストールされているフォルダのパスをシングルクオーテーション→'で囲って半角で記述してください。エラーになるため最後に\記号はつけないでください。<br>
+					例<br>
+					　×　'C:\Program Files\ImageMagick-6.5.6-Q16\'<br>
+					　○　'C:\Program Files\ImageMagick-6.5.6-Q16'<br>
+					相対パス、絶対パスともに使用可能です。記述されていない場合もしくはパスが有効でない場合はGoogle SketchUpの"Plugins"フォルダおよびシステムのパスからconvert.exeおよびidentify.exeを探します。見つからなかった場合は画像の変換は行いません。<br>
+					※判る人向け→ダブルクオーテーションも使用可能ですがパスのセパレータを\\にしてください。設定ツールで編集するとこの形式になります
 				</td>
 			</tr>
       <tr>
@@ -50,7 +70,7 @@
           一番下
         </td>
         <td>
-          自動分割時にひとつのアクセサリの最大頂点数を設定します。MMDでは65535以上に設定するとアクセサリが読み込めないです。
+          自動分割時にひとつのアクセサリあたりの最大頂点数を設定します。半角の数字(整数)で記述します。最小値は1、最大値はありません。1未満を設定した場合は65535になります。MMDでは65535より大きく設定するとアクセサリが読み込めません。
         </td>
       </tr>
 		</table>

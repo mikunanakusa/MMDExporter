@@ -3,10 +3,7 @@ module MMDExporter
 	
 	@@rename_tga = true
 
-	ImageMagickDir = 'C:\Program Files\ImageMagick-6.5.6-Q16/'
-	@@imageMagick_convert = ImageMagickDir + 'convert.exe'
-	@@imageMagick_identify = ImageMagickDir + 'identify.exe'
+	@@imageMagickDir = 'C:\Program Files\ImageMagick-6.5.6-Q16'
 	
-	Export_point_size = 65535
-
+	@@export_point_size = 65535
 end

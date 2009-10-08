@@ -223,6 +223,7 @@ module MMDExporter
 	def config_pram_check
 		begin
 			raise if !Range.new(1, 16).include?(@@max_proc)
+			@@max_proc = @@max_proc.to_i
 		rescue
 			@@max_proc = 1
 		end
@@ -232,14 +233,15 @@ module MMDExporter
 			@@rename_tga = false
 		end
 		begin
-			raise if @@imageMagick_convert.class != String
+			raise if @@imageMagickDir.class != String
 		rescue
-			@@imageMagick_convert = ''
+			@@imageMagickDir = ''
 		end
 		begin
-			raise if @@imageMagick_identify.class != String
+			raise if @@export_point_size < 1
+			@@export_point_size = @@export_point_size.to_i
 		rescue
-			@@imageMagick_identify = ''
+			@@export_point_size = 65535
 		end
 	end
 
@@ -585,16 +587,20 @@ module MMDExporter
 	#-------------------------------------------------------------------------------
 	#  ImageMagick "convert.exe" , "identify" serch
 	#-------------------------------------------------------------------------------
+		@@imageMagickDir.concat '/' if @@imageMagickDir[/.*(\/|\\)$/, 1].nil?
 		cmds_all = Hash.new
+
 		for cm in ["convert.exe" , "identify.exe"]
 			cmds = Array.new
-			cmds.concat [@@imageMagick_convert] if cm == "convert.exe"
-			cmds.concat [@@imageMagick_identify] if cm == "identify.exe"
+			cmds.concat ["#{@@imageMagickDir}convert.exe"] if cm == "convert.exe"
+			cmds.concat ["#{@@imageMagickDir}identify.exe"] if cm == "identify.exe"
 			cmds.concat ["#{File.expand_path(File.dirname(__FILE__))}/#{cm}"]		# plugin Dir
 			cmds.concat [cm]		# system PATH
 		
 			cmd = cmds.each{|cmd|
-				break cmd if !`"#{cmd}" -version 2>&1`["ImageMagick"].nil?
+				if File.exist?(cmd)
+					break cmd if !`"#{cmd}" -version 2>&1`["ImageMagick"].nil?
+				end
 			}
 		
 			if cmd.class == String
@@ -605,7 +611,6 @@ module MMDExporter
 		end
 		
 		return cmds_all
-		
 	end
 
 	def createXFile(part , fname , materials, faces, uvs, points, normals , finish, print_callback)		
@@ -684,11 +689,11 @@ module MMDExporter
 		#  Converting textures to TGA for multi process version
 		#-------------------------------------------------------------------------------
 		if !tw.count.zero? && renameTextureFile 
-			print_callback.call(true, "ImageMagick \"convert.exe\" \"identify.exe\" serching...")
+			print_callback.call(true, "ImageMagick \"convert.exe\" and \"identify.exe\" serching...")
 			im_command = search_imagemagick_path()
 			im_convert = im_command["convert.exe"]
 			im_identify = im_command["identify.exe"]
-			if !im_convert.nil?
+			if !im_convert.nil? && !im_identify.nil?
 				Dir.chdir(outDir)
 				convert_filelist = Array.new
 				Range.new(1, tw.count).each{|handle|
@@ -731,7 +736,7 @@ module MMDExporter
 				}
 				sleep(0.1) while ThreadGroup::Default.list.size > 1
 			else
-				print_callback.call(true, "ImageMagick \"convert.exe\" not found!")
+				print_callback.call(true, "ImageMagick \"convert.exe\" or \"identify.exe\" not found!")
 			end
 		end
 
@@ -762,7 +767,7 @@ module MMDExporter
 				mesh = face.mesh 7
 				p_n = mesh.count_points * export_face
 				
-				if point_num + p_n > Export_point_size && $smartInfo["autoSplit"]
+				if point_num + p_n > @@export_point_size && $smartInfo["autoSplit"]
 
 					# export to file 
 					createXFile(part , fname , materials, faces, uvs, points, normals , false, print_callback)
