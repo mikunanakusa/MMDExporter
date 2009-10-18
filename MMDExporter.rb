@@ -60,14 +60,7 @@ module MMDExporter
 		end
 		power = format("%8.4f", 5)
 		tex = ""
-		if textureFile && $smartInfo["renameTextureFile"]
-			textureFile_bmp = "#{File.basename(textureFile, '.*')}.bmp"
-			if File.exist?(textureFile_bmp)
-				textureFile = textureFile_bmp
-			else
-				textureFile = "#{File.basename(textureFile, '.*')}.tga"
-			end
-		end
+		textureFile = @@rename_list[textureFile] if textureFile && ($smartInfo["renameTextureFile"] || $smartInfo["renameJpegFile"]) && @@rename_list[textureFile]
 		tex = "   TextureFilename { \"#{textureFile}\"; }\n" if textureFile
 		
 	"Material #{name} {
@@ -233,6 +226,17 @@ module MMDExporter
 			@@rename_tga = false
 		end
 		begin
+			raise if !((@@rename_tex == true) || (@@rename_tex == false))
+		rescue
+			@@rename_tex = false
+		end
+		begin
+			raise if !((@@rename_jpg == true) || (@@rename_jpg == false))
+		rescue
+			@@rename_jpg = false
+		end
+	
+		begin
 			raise if @@imageMagickDir.class != String
 		rescue
 			@@imageMagickDir = ''
@@ -293,8 +297,9 @@ module MMDExporter
 			export_size = a[2]
 			sel = a[3] == "true"
 			export_face = a[4]
-			rename = a[5] == "true"
-			auto_split = a[6] == "true"
+			rename_tex = a[5] == "true"
+			rename_jpg = a[6] == "true"
+			auto_split = a[7] == "true"
 			outName = outDir + slash + outFile
 			
 			my_dialog.execute_script(
@@ -302,7 +307,7 @@ module MMDExporter
 			my_dialog.execute_script(
 			"document.getElementById('progress').innerHTML = 'Exporting...'");
 			
-			res = exportXFile(outName, outDir, export_size, sel, export_face, rename, auto_split, 
+			res = exportXFile(outName, outDir, export_size, sel, export_face, rename_tex, rename_jpg, auto_split, 
 			lambda {|forward, text|
 				if forward
 					puts text
@@ -345,9 +350,10 @@ module MMDExporter
 		sel = document.getElementById('exportSelected').checked
 <!--		export_face = document.getElementById('exportFace').value -->
 		export_face = '1'
-		rename = document.getElementById('renameTga').checked
+		rename_tex = document.getElementById('renameTEX').checked
+		rename_jpg = document.getElementById('renameJPG').checked
 		auto_split = document.getElementById('autoSplit').checked
-		callRuby('export', outputDir + ',' + outputFile + ',' + export_size + ',' + sel + ',' + export_face + ',' + rename + ',' + auto_split )
+		callRuby('export', outputDir + ',' + outputFile + ',' + export_size + ',' + sel + ',' + export_face + ',' + rename_tex + ',' + rename_jpg + ',' + auto_split )
 	}
 	</script>
 </head>
@@ -372,7 +378,8 @@ module MMDExporter
 	<option value='3'>Export back face
 	</select><br>                
 -->
-	<input id='renameTga' type='checkbox' value='Rename TGA file'> Rename Texture filename <br>
+	<input id='renameTEX' type='checkbox' value='Rename TEX file'> Rename and Convert Texture file (exclude jpeg format) <br>
+	<input id='renameJPG' type='checkbox' value='Rename JPG file'> Rename and Convert Texture file (jpeg format)<br>
 	<input id='autoSplit' type='checkbox' value='auto split file' checked> Auto Split<br>
 	<hr>
 	<div id='console' style='color: grey; font-family: monospace; font-size: smaller'>
@@ -383,7 +390,8 @@ module MMDExporter
 "
 
 		#print html
-		html.gsub!(/value='Rename TGA file'/, "value='Rename TGA file' checked") if @@rename_tga
+		html.gsub!(/value='Rename TEX file'/, "value='Rename TEX file' checked") if @@rename_tga || @@rename_tex
+		html.gsub!(/value='Rename JPG file'/, "value='Rename JPG file' checked") if @@rename_jpg
 		my_dialog.set_html(html)
 		
 		my_dialog.show {
@@ -650,7 +658,7 @@ module MMDExporter
 	end
 
 
-	def exportXFile(fname, outDir, export_size, selectedOnly, export_face, renameTextureFile, auto_split ,print_callback)
+	def exportXFile(fname, outDir, export_size, selectedOnly, export_face, renameTextureFile, renameJpegFile, auto_split ,print_callback)
 		if !fname || !outDir
 			print_callback.call(true, "Empty file or directory name.")
 			return false
@@ -666,6 +674,7 @@ module MMDExporter
 		$smartInfo["selectedOnly"] = selectedOnly
 		$smartInfo["exportFaceSide"] = export_face
 		$smartInfo["renameTextureFile"] = renameTextureFile
+		$smartInfo["renameJpegFile"] = renameJpegFile
 		$smartInfo["autoSplit"] = auto_split
 		if export_size.to_f > 0
 			$smartInfo["export_size"] = export_size.to_f
@@ -688,16 +697,22 @@ module MMDExporter
 		#-------------------------------------------------------------------------------
 		#  Converting textures to TGA for multi process version
 		#-------------------------------------------------------------------------------
-		if !tw.count.zero? && renameTextureFile 
+		if !tw.count.zero? && (renameTextureFile || renameJpegFile)
 			print_callback.call(true, "ImageMagick \"convert.exe\" and \"identify.exe\" serching...")
 			im_command = search_imagemagick_path()
 			im_convert = im_command["convert.exe"]
 			im_identify = im_command["identify.exe"]
 			if !im_convert.nil? && !im_identify.nil?
+				@@rename_list = {}
 				Dir.chdir(outDir)
 				convert_filelist = Array.new
 				Range.new(1, tw.count).each{|handle|
 					fn = tw.filename(handle)
+					if File.extname(fn).downcase =~ /jpg|jpeg/
+						next if !renameJpegFile
+					else
+						next if !renameTextureFile
+					end
 					hash = Hash.new
 					hash[:SRC] = File.basename(fn)
 					hash[:DST] = "#{File.basename(fn, '.*')}.bmp"
@@ -728,6 +743,7 @@ module MMDExporter
 							print_callback.call(true, "convert success #{convert_file[:SRC]} to #{convert_file[:DST]}")
 							File.rename(convert_file[:REN_DST], convert_file[:DST])
 							File.delete(convert_file[:SRC])
+							@@rename_list[convert_file[:SRC]] = convert_file[:DST]
 						else
 							print_callback.call(true, "convert fault #{convert_file[:SRC]} to #{convert_file[:DST]}")
 						end

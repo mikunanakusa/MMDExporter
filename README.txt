@@ -68,10 +68,37 @@ ImageMagickをインストールしたパスの設定は最低限行う必要が
  取ってきたファイルの大きさがあわないときはここで調整します。
 * Export selected only:
  選択した部分のみ出力します
-* Rename Texture filename: 
- テクスチャファイルのjpg、pngの拡張子をbmp、tgaに変更して出力します。
+* Rename and Convert Texture file (exclude jpeg format)
+ jpeg以外のテクスチャファイルをImageMagickを利用してbmp、tgaフォーマットに変換します。
+* Rename and Convert Texture file (jpeg format)
+ jpegフォーマットのテクスチャファイルをImageMagickを利用してbmpフォーマットに変換します。
 * Auto Split:
  自動分割を行います
+
+== 設定ファイル
+Google SketchUpの"Plugins"フォルダにある"MMDExporter_config.rb"ファイルで以下の設定が可能です。
+* @@max_proc
+ 画像をTGAおよびBMPに変換するときにImageMagickのconvert.exe、identify.exeコマンドを実行しますが、
+ このツールではconvert.exe、identify.exeコマンドを複数個同時に起動することが可能です。
+ 最大何個まで起動を許すのかを半角の数字(整数)で記述します。最小値は1、最大値は16まで有効です。
+ この範囲を逸脱した場合は1になります。
+* @@rename_tex or @@rename_tga
+ ツールを起動したときのウインドウにある"Rename and Convert Texture file (exclude jpeg format)"
+ チェックボックスの初期値を設定します。半角の小文字でtrueと記述すると
+ "Rename and Convert Texture file (exclude jpeg format)"チェックボックスにチェックが入った状態で
+ ウインドウが開きます。半角の小文字でfalseと記述するとチェックボックスにチェックが入っていない
+ 状態でウインドウが開きます。trueおよびfalseのみ有効です。これら以外を設定した場合はfalseになります。
+* @@rename_jpg
+ @@rename_texと同様に、"Rename and Convert Texture file (jpeg format)"のチェック設定が可能です。
+* @@imageMagickDir
+ ImageMagickのconvert.exeおよびindentify.exeコマンドがおいてあるフォルダを指定します。
+ convert.exeおよびidentify.exeファイルがインストールされているフォルダのパスを
+ シングルクオーテーション→'で囲って半角で記述してください。
+ エラーになるため最後に\記号はつけないでください。
+* @@export_point_size
+ 自動分割時にひとつのアクセサリあたりの最大頂点数を設定します。半角の数字(整数)で記述します。
+ 最小値は1、最大値はありません。1未満を設定した場合は65535になります。
+ MMDでは65535より大きく設定するとアクセサリが読み込めません。 
 
 == 免責事項
 * 本プラグインの利用は自己責任でお願いします。
@@ -79,6 +106,9 @@ ImageMagickをインストールしたパスの設定は最低限行う必要が
 責任を負いません。
 
 == 開発履歴
+* 2009-10-18
+ テクスチャファイルの変換をjpegファイルとそれ以外に分離
+ 
 * 2009-10-08 @ 407
  MMDExporter_config.rb内変数の見直し
  MMDExporter_config.rb内変数のチェック強化

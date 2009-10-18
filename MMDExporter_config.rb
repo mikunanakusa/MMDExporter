@@ -1,7 +1,8 @@
 module MMDExporter
 	@@max_proc = 2
 	
-	@@rename_tga = true
+	@@rename_tex = true
+	@@rename_jpg = false
 
 	@@imageMagickDir = 'C:\Program Files\ImageMagick-6.5.6-Q16'
 	
