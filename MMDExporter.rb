@@ -725,14 +725,16 @@ module MMDExporter
 
 				convert_filelist.each{|convert_file|
 					Thread.new(convert_file){|convert_file|
-						if im_identify && `"#{im_identify}" -verbose "#{convert_file[:SRC]}"`["Alpha:"]
+					  convert_flag = "BMP3:"
+						if im_identify && `"#{im_identify}" -verbose "#{convert_file[:SRC]}"` =~ /Alpha:.+\(\d+,\d+,\d+,\d+\)/
 							@@alpha_texturefile[convert_file[:SRC]] = true
 							convert_file[:DST].gsub!(/bmp$/ , "tga")
 							convert_file[:REN_DST].gsub!(/bmp$/ , "tga")
+						  convert_flag = ""
 						end
 						print_callback.call(true, "convert start #{convert_file[:SRC]} to #{convert_file[:DST]}")
 						File.cp(convert_file[:SRC], convert_file[:REN_SRC])						
-						`"#{im_convert}" "#{convert_file[:REN_SRC]}" "#{convert_file[:REN_DST]}"`
+						`"#{im_convert}" "#{convert_file[:REN_SRC]}"  #{convert_flag}"#{convert_file[:REN_DST]}"`
 						begin
 							File.delete(convert_file[:REN_SRC])
 						rescue

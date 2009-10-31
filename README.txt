@@ -106,6 +106,9 @@ Google SketchUpの"Plugins"フォルダにある"MMDExporter_config.rb"ファイ
 責任を負いません。
 
 == 開発履歴
+* 2009-11-01
+ 32bit版bmpの出力変更
+ 
 * 2009-10-18
  テクスチャファイルの変換をjpegファイルとそれ以外に分離
  
