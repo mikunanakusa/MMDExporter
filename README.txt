@@ -68,6 +68,12 @@ ImageMagickをインストールしたパスの設定は最低限行う必要が
  取ってきたファイルの大きさがあわないときはここで調整します。
 * Export selected only:
  選択した部分のみ出力します
+* Export front/back face
+ 表面、裏面の出力を行います
+* Export front face
+ 表面の出力を行います
+* Export back face
+ 裏面の出力を行います
 * Rename and Convert Texture file (exclude jpeg format)
  jpeg以外のテクスチャファイルをImageMagickを利用してbmp、tgaフォーマットに変換します。
 * Rename and Convert Texture file (jpeg format)
@@ -106,6 +112,9 @@ Google SketchUpの"Plugins"フォルダにある"MMDExporter_config.rb"ファイ
 責任を負いません。
 
 == 開発履歴
+* 2009-12-05
+ 片面のみ出力するオプションを追加
+
 * 2009-11-01
  32bit版bmpの出力変更
  

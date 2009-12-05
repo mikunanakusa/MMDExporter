@@ -288,26 +288,23 @@ module MMDExporter
 		# Attach an action callback
 		my_dialog.add_action_callback("export") { |web_dialog, params|
 #			puts params
-			a = params.split(',');
-			#UI.messagebox("Ruby says: Your javascript has asked for " + a)
-			#my_dialog.execute_script(
-			#	"document.getElementById('ala').innerHTML= '#{a.to_s}'");
-			outDir = a[0]
-			outFile = a[1]
-			export_size = a[2]
-			sel = a[3] == "true"
-			export_face = a[4]
-			rename_tex = a[5] == "true"
-			rename_jpg = a[6] == "true"
-			auto_split = a[7] == "true"
-			outName = outDir + slash + outFile
+			option = {}
+			for param in params.split(',')
+				k,v = param.split('=')
+				if v == "true" || v == "false"
+					option[k] = v == "true"
+				else
+					option[k] = v
+				end
+			end
+			option['outName'] = option['outDir'] + slash + option['outFile']
 			
 			my_dialog.execute_script(
 			"document.getElementById('console').innerHTML = ''");
 			my_dialog.execute_script(
 			"document.getElementById('progress').innerHTML = 'Exporting...'");
 			
-			res = exportXFile(outName, outDir, export_size, sel, export_face, rename_tex, rename_jpg, auto_split, 
+			res = exportXFile(option, 
 			lambda {|forward, text|
 				if forward
 					puts text
@@ -344,16 +341,16 @@ module MMDExporter
 		callRuby('browse', outputDir + ',' + outputFile)
 	}
 	function exportFunc() {
-		outputDir = document.getElementById('outDir').value
-		outputFile = document.getElementById('outFile').value
-		export_size = document.getElementById('exportSize').value
-		sel = document.getElementById('exportSelected').checked
-<!--		export_face = document.getElementById('exportFace').value -->
-		export_face = '1'
-		rename_tex = document.getElementById('renameTEX').checked
-		rename_jpg = document.getElementById('renameJPG').checked
-		auto_split = document.getElementById('autoSplit').checked
-		callRuby('export', outputDir + ',' + outputFile + ',' + export_size + ',' + sel + ',' + export_face + ',' + rename_tex + ',' + rename_jpg + ',' + auto_split )
+		option = ''
+		option += 'outDir=' + document.getElementById('outDir').value
+		option += ',outFile=' + document.getElementById('outFile').value
+		option += ',exportSize=' + document.getElementById('exportSize').value
+		option += ',exportSelected=' + document.getElementById('exportSelected').checked
+		option += ',exportFace=' + document.getElementById('exportFace').value
+		option += ',renameTEX=' + document.getElementById('renameTEX').checked
+		option += ',renameJPG=' + document.getElementById('renameJPG').checked
+		option += ',autoSplit=' + document.getElementById('autoSplit').checked
+		callRuby('export', option)
 	}
 	</script>
 </head>
@@ -371,13 +368,11 @@ module MMDExporter
 	Export Size:
 	<input id='exportSize' type='text' value='1' size='10'><br>
 	<input id='exportSelected' type='checkbox' value='Export Selected'> Export selected only<br>
-<!--
 	<select id='exportFace'>
 	<option value='1'>Export front/back face
 	<option value='2'>Export front face
 	<option value='3'>Export back face
 	</select><br>                
--->
 	<input id='renameTEX' type='checkbox' value='Rename TEX file'> Rename and Convert Texture file (exclude jpeg format) <br>
 	<input id='renameJPG' type='checkbox' value='Rename JPG file'> Rename and Convert Texture file (jpeg format)<br>
 	<input id='autoSplit' type='checkbox' value='auto split file' checked> Auto Split<br>
@@ -404,6 +399,8 @@ module MMDExporter
 
 	def export_facedata(face, mat_fb, tex_fb, texFile_fb, texFace, trans, tw,	materials, points, uvs, normals, faces, print_callback)
 		[true, false].each do |front|
+			next if front == false && $smartInfo["exportFaceSide"] == "2"
+			next if front == true && $smartInfo["exportFaceSide"] == "3"
 			mat = mat_fb[front][0]
 			tex = tex_fb[front][0]
 			texFile = texFile_fb[front]
@@ -573,15 +570,15 @@ module MMDExporter
 				sort_param = 0
 				sort_param = 1 if tex_alpha_flag 
 				sort_param = 2 if alpha_flag 
-				export_face = 2
+				export_face = $smartInfo["exportFaceSide"] == "1" ? 2 : 1
 
 				mesh = face.mesh 7
 				@@data_counter[:face] += 1
 				@@data_counter[:texalphaface] += 1 if tex_alpha_flag
 				@@data_counter[:alphaface] += 1 if alpha_flag
 				@@face_collect[sort_param] << [face, mat, tex, texFile, texFace, trans, export_face]
-				@@data_counter[:point] += mesh.count_points * 2
-				@@data_counter[:polygon] += mesh.count_polygons * 2
+				@@data_counter[:point] += mesh.count_points * export_face
+				@@data_counter[:polygon] += mesh.count_polygons * export_face
 			end
 			
 			return true
@@ -657,15 +654,21 @@ module MMDExporter
 
 	end
 
-
-	def exportXFile(fname, outDir, export_size, selectedOnly, export_face, renameTextureFile, renameJpegFile, auto_split ,print_callback)
+	def exportXFile(option, print_callback)
+		fname = option['outName']
+		outDir = option['outDir']
+		export_size = option['exportSize']
+		selectedOnly = option['exportSelected']
+		export_face = option['exportFace']
+		renameTextureFile = option['renameTEX']
+		renameJpegFile = option['renameJPG']
+		auto_split = option['autoSplit']
 		if !fname || !outDir
 			print_callback.call(true, "Empty file or directory name.")
 			return false
 		end
 
 #		p (fname, outDir, export_size, selectedOnly, export_face, renameTextureFile, auto_split)
-		
 		model = Sketchup.active_model
 		ss = model.active_entities
 		ss = model.selection if selectedOnly
