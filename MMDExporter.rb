@@ -35,7 +35,7 @@ module MMDExporter
 	def directx_def_material()
 		
 	"Material Default_Material { 
-1.000000;1.000000;1.000000;1.0;;
+1.0000;1.0000;1.0000;1.0;;
 5.0;
 #{Specular};#{Specular};#{Specular};;
 #{Emissive};#{Emissive};#{Emissive};;
@@ -49,16 +49,16 @@ module MMDExporter
 			alpha = 0.9999
 		end
 		
-		col = format("%8.4f;%8.4f;%8.4f;%8.4f;", 1.0, 1.0, 1.0, alpha)
-		spe = format("%8.4f;%8.4f;%8.4f;", Specular, Specular, Specular)
-		emi = format("%8.4f;%8.4f;%8.4f;", Emissive, Emissive, Emissive)
+		col = format("%.4f;%.4f;%.4f;%8.4f;", 1.0, 1.0, 1.0, alpha)
+		spe = format("%.4f;%.4f;%.4f;", Specular, Specular, Specular)
+		emi = format("%.4f;%.4f;%.4f;", Emissive, Emissive, Emissive)
 		
 		if !textureFile
-			col = format("%8.4f;%8.4f;%8.4f;%8.4f;", color.red / max_col, color.green / max_col, color.blue / max_col, alpha)
-			spe = format("%8.4f;%8.4f;%8.4f;",       color.red / max_col * Specular, color.green / max_col * Specular, color.blue / max_col * Specular)
-			emi = format("%8.4f;%8.4f;%8.4f;",       color.red / max_col * Emissive, color.green / max_col * Emissive, color.blue / max_col * Emissive)
+			col = format("%.4f;%.4f;%.4f;%.4f;", color.red / max_col, color.green / max_col, color.blue / max_col, alpha)
+			spe = format("%.4f;%.4f;%.4f;",       color.red / max_col * Specular, color.green / max_col * Specular, color.blue / max_col * Specular)
+			emi = format("%.4f;%.4f;%.4f;",       color.red / max_col * Emissive, color.green / max_col * Emissive, color.blue / max_col * Emissive)
 		end
-		power = format("%8.4f", 5)
+		power = format("%.4f", 5)
 		tex = ""
 		textureFile = @@rename_list[textureFile] if textureFile && ($smartInfo["renameTextureFile"] || $smartInfo["renameJpegFile"]) && @@rename_list[textureFile]
 		tex = "   TextureFilename { \"#{textureFile}\"; }\n" if textureFile
@@ -72,16 +72,23 @@ module MMDExporter
 "
 	end
 
-	def out_tab(f, points, del = ",", extra = "")
-		cnt = points.size
+	def out_tab(f, points, del = ",", extra = "")		
+		ff = open(points[2])
+		cnt = points[0]
 		return if cnt < 1
-		f.puts("  #{cnt};")
+		f.puts("#{cnt};")
+		f.print ff.read[0..-3]
+		f.puts ";"
+		ff.close
+		return
+
 		for i in 0..(cnt - 2)
-			p = points[i]
-			f.puts("  #{p}#{del}")
+			p = ff.gets.chomp
+			f.puts("#{p}#{del}")
 		end
-		p = points[cnt - 1]
-		f.puts("  #{p}#{extra};")
+		p = ff.gets.chomp
+		f.puts("#{p}#{extra};")
+		ff.close
 	end
 
 	def out_point(p)
@@ -89,7 +96,7 @@ module MMDExporter
 		px = p.x * Inch_to_meter * $smartInfo["export_size"]
 		py = p.z * Inch_to_meter * $smartInfo["export_size"]
 		pz = p.y * Inch_to_meter * $smartInfo["export_size"]
-		format("%8.4f;%8.4f;%8.4f;", px, py, pz)
+		format("%.4f;%.4f;%.4f;", px, py, pz)
 	end
 
 	def out_normal(p)
@@ -97,16 +104,16 @@ module MMDExporter
 		px = p.x
 		py = p.z
 		pz = p.y
-		format("%8.4f;%8.4f;%8.4f;", px, py, pz)
+		format("%.4f;%.4f;%.4f;", px, py, pz)
 	end
 
 	def out_uv(u, v)
-		format("%8.4f,%8.4f;", u, v)
+		format("%.4f,%.4f;", u, v)
 	end
 
 	def out_face(f, face)
 		cnt = face.size
-		f.printf("  #{cnt};")
+		f.printf("#{cnt};")
 		for i in 0..(cnt - 2)
 			p = face[i][0]
 			f.printf("#{p[0]},")
@@ -116,9 +123,15 @@ module MMDExporter
 	end
 
 	def out_faces(f, faces)
+		ff = open(@@face_points[2])
 		cnt = faces.size
 		return if cnt < 1
-		f.puts("  #{cnt};")
+		f.puts("#{cnt};")
+		f.print ff.read[0..-3]
+		f.puts ";;"
+		ff.close
+		return
+		
 		for i in 0..(cnt - 2)
 			fc = faces[i]
 			out_face(f, fc[0]);
@@ -132,7 +145,7 @@ module MMDExporter
 	
 	def out_face_ns(f, face)
 		cnt = face.size
-		f.printf("  #{cnt};")
+		f.printf("#{cnt};")
 		for i in 0..(cnt - 2)
 			p = face[i][0]
 			f.printf("#{p[2]},")
@@ -142,9 +155,18 @@ module MMDExporter
 	end
 	
 	def out_normals(f, faces)
+		ff = open(@@face_normals[2])
 		cnt = faces.size
 		return if cnt < 1
-		f.puts("  #{cnt};")
+		f.puts("#{cnt};")
+		f.print ff.read[0..-2]
+		f.puts ";"
+		ff.close
+		return
+
+		cnt = faces.size
+		return if cnt < 1
+		f.puts("#{cnt};")
 		for i in 0..(cnt - 2)
 			fc = faces[i]
 			out_face_ns(f, fc[0]);
@@ -161,24 +183,24 @@ module MMDExporter
 		for n, in materials
 			mats.push(n)
 		end
-		f.puts("  #{mats.size};")
+		f.puts("#{mats.size};")
 		cnt = faces.size
 		return if cnt < 1
-		f.puts("  #{cnt};")
+		f.puts("#{cnt};")
 		for i in 0..(cnt - 2)
 			fc = faces[i]
 			m = fc[1]
 			midx = mats.index(m)
-			f.puts("  #{midx},")
+			f.puts("#{midx},")
 		end
 		
 		fc = faces[cnt - 1]
 		m = fc[1]
 		midx = mats.index(m)
-		f.puts("  #{midx};")
+		f.puts("#{midx};")
 		
 		mats.each {|mmm|
-			f.puts("   { #{mmm} }")
+			f.puts("{ #{mmm} }")
 		}
 	end
 	
@@ -367,7 +389,8 @@ module MMDExporter
 	<input id='outFile' type='text' value='#{name}' size='60'><br>
 	Export Size:
 	<input id='exportSize' type='text' value='1' size='10'><br>
-	<input id='exportSelected' type='checkbox' value='Export Selected'> Export selected only<br>
+	<input id='exportSelected' type='checkbox' value='Export Selected'> Export selected object<br>
+	Export face 
 	<select id='exportFace'>
 	<option value='1'>Export front/back face
 	<option value='2'>Export front face
@@ -453,18 +476,29 @@ module MMDExporter
 					end
 				end
 				uv = out_uv(uq, vq)
-				uvs << uv
-
 				pt = out_point(trans * pos)
-			
-				points << pt
-				point_list[i] = points.length-1
+				ptuv = pt + uv
+
+				unless @@points_index[ptuv]
+					@@points_index[ptuv] = @@points_index.length
+					points[0] += 1
+					points[1].puts pt + ","
+					uvs[0] += 1
+					uvs[1].puts uv
+				end
+#				point_list[i] = points.length-1
+				point_list[i] = @@points_index[ptuv]
 
 				n = mesh.normal_at(i)
 				n = Geom::Vector3d.new(-n[0],-n[1],-n[2]) if !front
 				n = out_normal((trans * n).normalize)
-				normals << n
-				normal_list[i] = normals.length-1
+				unless @@normals_index[n]
+					@@normals_index[n] = @@normals_index.length
+					normals[0] += 1
+					normals[1].puts n + ","
+				end
+#				normal_list[i] = normals.length-1
+				normal_list[i] = @@normals_index[n]
 			end
 
 			for poly in mesh.polygons
@@ -479,12 +513,18 @@ module MMDExporter
  				end
 
 				theFace = []
-
+				pl = []
+				nl = []
 				for p in poly
 					pidx = point_list[p.abs]
 					nidx = normal_list[p.abs]
-					theFace.push([[pidx, pidx, nidx], front])
+#					theFace.push([[pidx, pidx, nidx], front])
+					pl << pidx
+					nl << nidx
 				end
+
+				@@face_points[1].puts "#{pl.length};#{pl * ","},"
+				@@face_normals[1].puts "#{nl.length};#{nl * ","};"
 				
 				faces.push([theFace, mname])
 			end
@@ -650,6 +690,7 @@ module MMDExporter
 	
 		f.close	
 
+		print_callback.call(true, "Export Point: #{points[0]}")
 		print_callback.call(true, "Export: #{part} Done.")
 
 	end
@@ -770,18 +811,20 @@ module MMDExporter
 											nil, nil, nil, nil, nil,
 											nil, print_callback)
 											
-		print_callback.call(true, "Export Face: #{@@data_counter[:face]}")
-		print_callback.call(true, "Export Polygon: #{@@data_counter[:polygon]}")
-		print_callback.call(true, "Export Point: #{@@data_counter[:point]}")
 		point_num = 0
 		part = 1
 		materials = {}			
 		faces = []			
-		uvs = []
-		points = []
-		normals = []
+		uvs = [0,open(outDir + "/uvs.tmp" , "w") , outDir + "/uvs.tmp"]
+		points = [0,open(outDir + "/points.tmp" , "w") , outDir + "/points.tmp"]
+		@@points_index = {}
+		normals = [0,open(outDir + "/normals.tmp" , "w") , outDir + "/normals.tmp"]
+		@@normals_index = {}
+		@@face_points = [0,open(outDir + "/face_points.tmp" , "w") , outDir + "/face_points.tmp"]
+		@@face_normals = [0,open(outDir + "/face_normals.tmp" , "w") , outDir + "/face_normals.tmp"]
 
 		print_callback.call(true, "Analyzing geometry")
+		all_points = 0
 
 		for sort_param in [0,1,2]
 			for face , mat , tex , texFile , texFace, trans, export_face in @@face_collect[sort_param]
@@ -791,41 +834,84 @@ module MMDExporter
 				if point_num + p_n > @@export_point_size && $smartInfo["autoSplit"]
 
 					# export to file 
+					all_points += points[0]
+					uvs[1].close
+					points[1].close
+					normals[1].close
+					@@face_points[1].close
+					@@face_normals[1].close
 					createXFile(part , fname , materials, faces, uvs, points, normals , false, print_callback)
 					part += 1
-					point_num = p_n
+					point_num = 0
 					materials = {}			
 					faces = []
-					uvs = []
-					points = []
-					normals = []
+					uvs = [0,open(outDir + "/uvs.tmp" , "w") , outDir + "/uvs.tmp"]
+					points = [0,open(outDir + "/points.tmp" , "w") , outDir + "/points.tmp"]
+					@@points_index = {}
+					normals = [0,open(outDir + "/normals.tmp" , "w") , outDir + "/normals.tmp"]
+					@@normals_index = {}
+					@@face_points = [0,open(outDir + "/face_points.tmp" , "w") , outDir + "/face_points.tmp"]
+					@@face_normals = [0,open(outDir + "/face_normals.tmp" , "w") , outDir + "/face_normals.tmp"]
 #					exit
-				else
-					point_num += p_n
 				end
 
-				export_facedata(face, mat, tex, texFile, texFace, trans, tw,	materials, points, uvs, normals, faces, print_callback)			
+				export_facedata(face, mat, tex, texFile, texFace, trans, tw,	materials, points, uvs, normals, faces, print_callback)
+				point_num = points[0]
 			
 			end
 
 			if faces.length > 0 && $smartInfo["autoSplit"]
+				all_points += points[0]
+				uvs[1].close
+				points[1].close
+				normals[1].close
+				@@face_points[1].close
+				@@face_normals[1].close
 				createXFile(part , fname , materials, faces, uvs, points, normals , false, print_callback)
 				part += 1
 				point_num = 0
 				materials = {}			
 				faces = []
-				uvs = []
-				points = []
-				normals = []
+				uvs = [0,open(outDir + "/uvs.tmp" , "w") , outDir + "/uvs.tmp"]
+				points = [0,open(outDir + "/points.tmp" , "w") , outDir + "/points.tmp"]
+				@@points_index = {}
+				normals = [0,open(outDir + "/normals.tmp" , "w") , outDir + "/normals.tmp"]
+				@@normals_index = {}
+				@@face_points = [0,open(outDir + "/face_points.tmp" , "w") , outDir + "/face_points.tmp"]
+				@@face_normals = [0,open(outDir + "/face_normals.tmp" , "w") , outDir + "/face_normals.tmp"]
 			end		
 		end
 
 		if faces.length > 0
+			all_points += points[0]
+			uvs[1].close
+			points[1].close
+			normals[1].close
+			@@face_points[1].close
+			@@face_normals[1].close
 			createXFile(part , fname , materials, faces, uvs, points, normals , true, print_callback)
 		end
 		
+		print_callback.call(true, "Export Face: #{@@data_counter[:face]}")
+		print_callback.call(true, "Export Polygon: #{@@data_counter[:polygon]}")
+		print_callback.call(true, "Export Point: #{all_points}")
+		
 		print_callback.call(true, "Export finish.")
-
+		
+		begin
+			uvs[1].close unless uvs[1].closed?
+			points[1].close unless points[1].closed?
+			normals[1].close unless normals[1].closed?
+			@@face_points[1].close unless @@face_points[1].closed? 
+			@@face_normals[1].close unless @@face_normals[1].closed?
+			File.delete(outDir + "/uvs.tmp")
+			File.delete(outDir + "/points.tmp")
+			File.delete(outDir + "/normals.tmp")		
+			File.delete(outDir + "/face_points.tmp")		
+			File.delete(outDir + "/face_normals.tmp")		
+		rescue
+		end
+	
 		return true
 	end
 	
