@@ -13,7 +13,7 @@ http://www.scriptspot.com/sketchup/script/zbylsxexporter
 配布しているテクスチャファイルをTGAへ自動変換する機能を追加する改造版を元に修正を行いました。
 
 == 動作環境
-WindowsXP SP3 + Google SketchUp 6で動作確認を行っています。
+WindowsXP SP3 + MMD(Ver 5.21 or 6.08) + Google SketchUp (ver 6 or 7) で動作確認を行っています。
 
 == ImageMagickについて
 画像の変換時に使用するImageMagickのコマンドを以下の順番で探索します。
@@ -24,15 +24,15 @@ WindowsXP SP3 + Google SketchUp 6で動作確認を行っています。
 
 == インストール
 === プラグインのダウンロード
-http://github.com/mikunanakusa/MMDExporter のページからdownload -> ZIP をクリックして
-ファイルをダウンロードします。
+http://github.com/mikunanakusa/MMDExporter のページから Download Source -> ZIP をクリックして
+ファイルをダウンロードします。(Java Scriptが動いていないとうまくダウンロードが出来ないようです)
 
 もし、うまくいかなかった場合は http://github.com/mikunanakusa/MMDExporter/zipball/master
 から落としてください。
 
 === Google SketchUp のセットアップ
 Google SketchUp ですが、http://sketchup.google.com のページからインストールを行います。
-このプラグインは Google SketchUp 6 (無料版)  で使用可能です。
+このプラグインは Google SketchUp(ver 6 or 7) (無料版)  で使用可能です。
 
 === ImageMagick のセットアップ
 ImageMagickのインストールはim_setup.htmlを参考にしてインストールしてください。
@@ -105,7 +105,17 @@ Google SketchUpの"Plugins"フォルダにある"MMDExporter_config.rb"ファイ
  自動分割時にひとつのアクセサリあたりの最大頂点数を設定します。半角の数字(整数)で記述します。
  最小値は1、最大値はありません。1未満を設定した場合は65535になります。
  MMDでは65535より大きく設定するとアクセサリが読み込めません。
- (ver6以降は65535より大きなアクセサリの読み込みが可能になりました)
+ (MMD ver6以降は65535より大きなアクセサリの読み込みが可能になりました)
+
+== 自動分割について
+自動分割(Auto Split)をONにすると、@@export_point_size で設定した頂点数を超える.xを作りません。
+そのため MMD ver6 以前の MMD で頂点数が多いモデルを変換してアクセサリとして読み込む場合は
+自動分割をする必要があります。
+
+自動分割オプションをOFFにすると透過オブジェクトもまとめてひとつのアクセサリとして出力します。
+自動分割オプションをONにすると、透過オブジェクトを分割して出力します。表示がうまくいかない場合は
+自動分割を行って別々に.xファイルを読み込んでください。
+
 
 == 免責事項
 * 本プラグインの利用は自己責任でお願いします。
